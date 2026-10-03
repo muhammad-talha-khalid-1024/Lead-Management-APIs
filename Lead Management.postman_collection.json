@@ -1,0 +1,471 @@
+{
+	"info": {
+		"_postman_id": "37d70a0b-a4cc-4df1-bd63-54aed6fc8240",
+		"name": "Lead Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44017798"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lead@example.com\",\n    \"password\": \"Password@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resolver",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/resolver",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"resolver"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Leads",
+			"item": [
+				{
+					"name": "Create Lead",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ahmed Ali\",\n  \"phone\": \"+97455555555\",\n  \"whatsappNumber\": \"+97455555555\",\n  \"email\": \"ahmed@example.com\",\n  \"source\": \"FACEBOOK\",\n  \"campaign\": \"West Bay Apartments\",\n  \"interestedLocation\": \"West Bay\",\n  \"propertyType\": \"APARTMENT\",\n  \"bedrooms\": 2,\n  \"budgetFrom\": 6000,\n  \"budgetTo\": 8000,\n  \"movingDate\": \"2027-01-01\",\n  \"priority\": \"HOT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Leads",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/leads?page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "status",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "source",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "priority",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Lead",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/leads/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Qualify Lead",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"qualificationComment\": \"Customer requires a 2-bedroom apartment in West Bay\",\n  \"interestedLocation\": \"West Bay\",\n  \"budgetFrom\": 6000,\n  \"budgetTo\": 8000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/qualify",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"qualify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Lead Not Qualified",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"BUDGET_NOT_SUITABLE\",\n  \"comment\": \"Customer cannot meet the required budget.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/not-qualified",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"not-qualified"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Agent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"agentId\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/assign",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"assign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Convert Lead",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"propertyId\": 123,\n  \"unitId\": 456,\n  \"comment\": \"Customer agreed to proceed with the property\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/convert",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"convert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drop Lead",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"BUDGET_ISSUE\",\n  \"comment\": \"Customer cannot increase the budget\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/drop",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"drop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Lead",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/approve",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lead Timeline",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/timeline",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"timeline"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Lead Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJMZWFkIEdlbmVyYXRpb24gVXNlciIsImVtYWlsIjoibGVhZEBleGFtcGxlLmNvbSIsInJvbGVTbHVnIjoibGVhZC1nZW5lcmF0aW9uIiwiaWF0IjoxNzkwOTUwMjk3LCJleHAiOjE3OTE1NTUwOTd9.jWPLJfEMX13K47iVmoTA1T5VDIsfdlH7MQ5-Sx6qcnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"LEAD_GENERATION_FOLLOW_UP\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/leads/1/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"leads",
+								"1",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
