@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  LEAD_GENERATION_FOLLOW_UP
+  QUALIFIED
+  PENDING_AGENT_ASSIGNMENT
+  AGENT_ASSIGNED
+  CONVERTED_PENDING_APPROVAL
+  DROPPED_PENDING_APPROVAL
+  CLOSED
+}
+
+enum LeadSource {
+  WEBSITE
+  FACEBOOK
+  INSTAGRAM
+  WHATSAPP
+  GOOGLE_CAMPAIGN
+  PROPERTY_PORTAL
+  PHONE_CALL
+  MANUAL_ENTRY
+}
+
+enum PropertyType {
+  APARTMENT
+  VILLA
+  TOWNHOUSE
+  OFFICE
+  COMMERCIAL
+  LAND
+  OTHER
+}
+
+enum LeadPriority {
+  HOT
+  WARM
+  COLD
+}
+
+enum NotQualifiedReason {
+  BUDGET_NOT_SUITABLE
+  PROPERTY_NOT_AVAILABLE
+  NOT_INTERESTED
+  DUPLICATE_LEAD
+  INVALID_CONTACT
+  FUTURE_REQUIREMENT
+  UNABLE_TO_CONTACT
+  OTHER
+}
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  users User[]
+
+  @@map("roles")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  roleId        Int      @map("role_id")
+  name          String
+  email         String   @unique
+  password      String
+  createdAt     DateTime @default(now()) @map("created_at")
+  rememberToken String?  @map("remember_token")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  role Role @relation(fields: [roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  createdLeads   Lead[]         @relation("CreatedLeads")
+  assignedLeads  Lead[]         @relation("AssignedAgent")
+  timelineEvents LeadTimeline[] @relation("TimelinePerformedBy")
+
+  @@index([roleId])
+  @@map("users")
+}
+
+model Lead {
+  id Int @id @default(autoincrement())
+
+  createdById Int  @map("created_by_id")
+  createdBy   User @relation("CreatedLeads", fields: [createdById], references: [id])
+
+  name           String
+  phone          String
+  whatsappNumber String? @map("whatsapp_number")
+  email          String?
+
+  source   LeadSource
+  campaign String?
+
+  interestedLocation String?      @map("interested_location")
+  propertyType       PropertyType @map("property_type")
+  bedrooms           Int?
+
+  budgetFrom Decimal? @map("budget_from") @db.Decimal(12, 2)
+  budgetTo   Decimal? @map("budget_to") @db.Decimal(12, 2)
+
+  movingDate DateTime?
+  priority   LeadPriority @default(WARM)
+
+  status LeadStatus @default(NEW)
+
+  qualificationComment String? @map("qualification_comment")
+
+  notQualifiedReason  NotQualifiedReason? @map("not_qualified_reason")
+  notQualifiedComment String?             @map("not_qualified_comment")
+
+  assignedAgentId Int?  @map("assigned_agent_id")
+  assignedAgent   User? @relation("AssignedAgent", fields: [assignedAgentId], references: [id])
+
+  // Agent outcome
+  propertyId Int? @map("property_id")
+  unitId     Int? @map("unit_id")
+
+  convertedComment String? @map("converted_comment")
+
+  droppedReason  String? @map("dropped_reason")
+  droppedComment String? @map("dropped_comment")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  timeline LeadTimeline[]
+
+  @@index([createdById])
+  @@index([status])
+  @@index([assignedAgentId])
+  @@index([phone])
+  @@index([email])
+  @@index([whatsappNumber])
+  @@map("leads")
+}
+
+enum LeadTimelineType {
+  LEAD_CREATED
+  QUALIFICATION_STARTED
+  LEAD_QUALIFIED
+  LEAD_NOT_QUALIFIED
+  AGENT_ASSIGNED
+  LEAD_CONVERTED
+  LEAD_DROPPED
+  OUTCOME_APPROVED
+  LEAD_CLOSED
+}
+
+model LeadTimeline {
+  id Int @id @default(autoincrement())
+
+  leadId Int  @map("lead_id")
+  lead   Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  type LeadTimelineType
+
+  performedById Int  @map("performed_by_id")
+  performedBy   User @relation("TimelinePerformedBy", fields: [performedById], references: [id], onDelete: Restrict)
+
+  metadata Json?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([leadId])
+  @@index([performedById])
+  @@index([type])
+  @@index([createdAt])
+  @@map("lead_timeline")
+}
